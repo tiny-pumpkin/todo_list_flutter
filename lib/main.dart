@@ -1,4 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
@@ -63,62 +62,45 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 45),
-        child: FittedBox(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              Text(
-                'Today',
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 18,
-                  fontWeight: FontWeight.w700,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            Text(
+              'Today',
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: 18,
+                fontWeight: FontWeight.w700,
+              ),
+            ),
+            Text(
+              formattedDate,
+              style: TextStyle(
+                color: Color(0xff757878),
+                fontSize: 14,
+                fontWeight: FontWeight.w100,
+              ),
+            ),
+            Padding(
+              padding: EdgeInsets.symmetric(vertical: 15),
+              child: Container(
+                width: double.infinity,
+                decoration: BoxDecoration(
+                  color: Color(0xff201F1F),
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                child: Padding(
+                  padding: EdgeInsets.all(15),
+                  child: Row(
+                    children: [
+                      // TODO colocar icone aqui
+                      Text('Teste', style: TextStyle(color: Color(0xffF5F5F5))),
+                    ],
+                  ),
                 ),
               ),
-              Text(
-                formattedDate,
-                style: TextStyle(
-                  color: Color(0xff757878),
-                  fontSize: 14,
-                  fontWeight: FontWeight.w100,
-                ),
-              ),
-              // Card(
-              //   elevation: 4,
-              //   shape: RoundedRectangleBorder(
-              //     borderRadius: BorderRadius.circular(12),
-              //   ),
-              //   child: Padding(
-              //     padding: const EdgeInsets.all(16),
-              //     child: Row(
-              //       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              //       children: [
-              //         Text(
-              //           "Meu Card",
-              //           style: TextStyle(
-              //             fontSize: 18,
-              //             fontWeight: FontWeight.w500,
-              //           ),
-              //         ),
-              //         Icon(Icons.arrow_forward_ios),
-              //       ],
-              //     ),
-              //   ),
-              // ),
-              // ListView(
-              //   children: [
-              //     GestureDetector(
-              //       child: Card(
-              //         elevation: 4,
-              //         color: Colors.red,
-              //         shape: RoundedRectangleBorder(),
-              //       ),
-              //       onTap: () {},
-              //     ),
-              //   ],
-              // ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
       floatingActionButton: Padding(
