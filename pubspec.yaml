@@ -37,6 +37,7 @@ dependencies:
   cloud_firestore: ^5.6.3
   firebase_core: ^3.11.0
   intl: ^0.20.2
+  flutter_svg: ^2.0.17
   
 
 dev_dependencies:
@@ -84,6 +85,7 @@ flutter:
         - asset: assets/fonts/Raleway-Bold.ttf
   assets:
     - assets/icons/check_circle.svg
+    - assets/icons/radio_button_unchecked.svg
   uses-material-design: true
   
   # For details regarding fonts from package dependencies,

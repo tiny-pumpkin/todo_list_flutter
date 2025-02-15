@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:intl/intl.dart';
+import 'package:todo_list_flutter/models/task.dart';
 
 void main() {
   runApp(const MyApp());
@@ -50,7 +52,130 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  List<Task> tasks = [
+    Task(name: 'Tarefa 1'),
+    Task(name: 'Tarefa 2'),
+    Task(name: 'Tarefa 3'),
+  ];
+
+  void toggleTaskCompletion(int index) {
+    setState(() {
+      Task task = tasks[index];
+
+      task.isCompleted = !task.isCompleted;
+
+      if ((task.completedDate ?? false) == false) {
+        task.completedDate = DateTime.now();
+      } else {
+        task.completedDate = null;
+      }
+    });
+  }
+
+  List<Widget> tarefas = const <Widget>[];
+
   String formattedDate = DateFormat('dd/MM/yyyy').format(DateTime.now());
+
+  ListView lista = ListView(
+    children: [
+      Container(
+        width: double.infinity,
+        decoration: BoxDecoration(
+          color: Color(0xff201F1F),
+          borderRadius: BorderRadius.circular(8),
+        ),
+        child: Padding(
+          padding: EdgeInsets.all(15),
+          child: Row(
+            children: [
+              Padding(
+                padding: EdgeInsets.only(right: 5),
+                child: SvgPicture.asset(
+                  'assets/icons/check_circle.svg',
+                  width: 18,
+                  height: 18,
+                ),
+              ),
+              Text('Teste', style: TextStyle(color: Color(0xffF5F5F5))),
+            ],
+          ),
+        ),
+      ),
+      SizedBox(height: 10),
+      Container(
+        width: double.infinity,
+        decoration: BoxDecoration(
+          color: Color(0xff201F1F),
+          borderRadius: BorderRadius.circular(8),
+        ),
+        child: Padding(
+          padding: EdgeInsets.all(15),
+          child: Row(
+            children: [
+              Padding(
+                padding: EdgeInsets.only(right: 5),
+                child: SvgPicture.asset(
+                  'assets/icons/check_circle.svg',
+                  width: 18,
+                  height: 18,
+                ),
+              ),
+              Text('Teste', style: TextStyle(color: Color(0xffF5F5F5))),
+            ],
+          ),
+        ),
+      ),
+    ],
+  );
+
+  GestureDetector generateTaskContainer(task) {
+    return GestureDetector(
+      child: Container(
+        width: double.infinity,
+        decoration: BoxDecoration(
+          color: Color(0xff201F1F),
+          borderRadius: BorderRadius.circular(8),
+        ),
+        child: Padding(
+          padding: EdgeInsets.all(15),
+          child: Row(
+            children: [
+              Padding(
+                padding: EdgeInsets.only(right: 5),
+                child: SvgPicture.asset(
+                  getTaskIcon(task.foiFinalizada),
+                  width: 18,
+                  height: 18,
+                ),
+              ),
+              Text(
+                task.nome,
+                style: TextStyle(
+                  color: Color(0xffF5F5F5),
+                  decoration:
+                      task.isCompleted
+                          ? TextDecoration.lineThrough
+                          : TextDecoration.none,
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+      onTap: () {
+        task.foiFinalizada = !task.foiFinalizada;
+      },
+    );
+  }
+
+  String getTaskIcon(bool foiFinalizada) {
+    Map<bool, String> taskIcon = {
+      true: 'check_circle.svg',
+      false: 'radio_button_unchecked.svg',
+    };
+
+    return "assets/icons/${taskIcon[foiFinalizada]}";
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -81,23 +206,11 @@ class _MyHomePageState extends State<MyHomePage> {
                 fontWeight: FontWeight.w100,
               ),
             ),
-            Padding(
-              padding: EdgeInsets.symmetric(vertical: 15),
-              child: Container(
-                width: double.infinity,
-                decoration: BoxDecoration(
-                  color: Color(0xff201F1F),
-                  borderRadius: BorderRadius.circular(8),
-                ),
-                child: Padding(
-                  padding: EdgeInsets.all(15),
-                  child: Row(
-                    children: [
-                      // TODO colocar icone aqui
-                      Text('Teste', style: TextStyle(color: Color(0xffF5F5F5))),
-                    ],
-                  ),
-                ),
+            Expanded(
+              child: Padding(
+                padding: EdgeInsets.symmetric(vertical: 15),
+                // TODO descomentar
+                // child: tarefas,
               ),
             ),
           ],
