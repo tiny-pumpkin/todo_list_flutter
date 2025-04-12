@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:intl/intl.dart';
 import 'package:todo_list_flutter/models/task.dart';
 
 void main() {
+  Intl.defaultLocale = 'pt_BR';
+  WidgetsFlutterBinding.ensureInitialized();
+
   runApp(const MyApp());
 }
 
@@ -13,6 +17,12 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      localizationsDelegates: const [
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+      ],
+      supportedLocales: const [Locale('pt', 'BR')],
       debugShowCheckedModeBanner: false,
       title: 'Todo list Flutter',
       theme: ThemeData(
@@ -74,7 +84,10 @@ class _MyHomePageState extends State<MyHomePage> {
 
   List<Widget> tarefas = const <Widget>[];
 
-  String formattedDate = DateFormat('dd/MM/yyyy').format(DateTime.now());
+  String formattedDate = DateFormat(
+    'MMMM d, yyyy',
+    'pt_BR',
+  ).format(DateTime.now());
 
   ListView lista = ListView(
     children: [
@@ -125,6 +138,43 @@ class _MyHomePageState extends State<MyHomePage> {
           ),
         ),
       ),
+      GestureDetector(
+      child: Container(
+        width: double.infinity,
+        decoration: BoxDecoration(
+          color: Color(0xff201F1F),
+          borderRadius: BorderRadius.circular(8),
+        ),
+        child: Padding(
+          padding: EdgeInsets.all(15),
+          child: Row(
+            children: [
+              Padding(
+                padding: EdgeInsets.only(right: 5),
+                child: SvgPicture.asset(
+                  getTaskIcon(task.foiFinalizada),
+                  width: 18,
+                  height: 18,
+                ),
+              ),
+              Text(
+                task.nome,
+                style: TextStyle(
+                  color: Color(0xffF5F5F5),
+                  decoration:
+                      task.isCompleted
+                          ? TextDecoration.lineThrough
+                          : TextDecoration.none,
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+      onTap: () {
+        task.foiFinalizada = !task.foiFinalizada;
+      },
+    );
     ],
   );
 
@@ -210,7 +260,7 @@ class _MyHomePageState extends State<MyHomePage> {
               child: Padding(
                 padding: EdgeInsets.symmetric(vertical: 15),
                 // TODO descomentar
-                // child: tarefas,
+                child: lista,
               ),
             ),
           ],
